@@ -11,14 +11,22 @@ namespace WebApi.Controller
     [Route("api/[controller]")]
 
     /// <summary>
-    /// Library class
+    /// Library instance
     /// </summary>
     public class LibraryController : ApiController
     {
         /// <summary>
         /// set of books
         /// </summary>
-        private BooksSet _books = new BooksSet();
+        private IBooksSet _booksSet;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LibraryController"/> class
+        /// </summary>
+        public LibraryController()
+        {
+            _booksSet = BooksSet.GetInstance();
+        }
 
         /// <summary>
         /// Get all books
@@ -28,7 +36,7 @@ namespace WebApi.Controller
         [HttpGet]
         public IEnumerable<Book> GetAll()
         {
-             return _books.GetBooks();
+             return _booksSet.GetBooks();
         }
 
         /// <summary>
@@ -40,7 +48,7 @@ namespace WebApi.Controller
         [HttpGet]
         public Book GetById(int id)
         {
-            return _books.GetBook(id);
+            return _booksSet.GetBook(id);
         }
 
         /// <summary>
@@ -51,7 +59,7 @@ namespace WebApi.Controller
         [HttpPost]
         public void CreateBook(Book book)
         {
-          _books.CreateBook(book);   
+            _booksSet.CreateBook(book);   
         }
 
         /// <summary>
@@ -63,7 +71,7 @@ namespace WebApi.Controller
         [HttpPut]
         public void EditBook(int id, Book book)
         {
-            _books.EditBook(id, book);
+            _booksSet.EditBook(id, book);
         }
 
         /// <summary>
@@ -74,7 +82,7 @@ namespace WebApi.Controller
         [HttpDelete]
         public void Delete(int id)
         {
-            _books.DeleteBook(id);
+            _booksSet.DeleteBook(id);
         }
     }
 }

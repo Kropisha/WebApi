@@ -7,7 +7,7 @@ namespace WebApi.Models
     /// <summary>
     /// Set the  obvious interface for every book
     /// </summary>
-    public class Book : IBook
+    public class Book
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Book"/> class

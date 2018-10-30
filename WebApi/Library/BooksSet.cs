@@ -12,8 +12,13 @@ namespace WebApi.Library
     /// <summary>
     /// Class for set of books
     /// </summary>
-    public class BooksSet
+    public class BooksSet : IBooksSet
     {
+        /// <summary>
+        /// instance for singleton
+        /// </summary>
+        private static BooksSet instance;
+
         /// <summary>
         /// list of books
         /// </summary>
@@ -24,11 +29,24 @@ namespace WebApi.Library
         /// </summary>
         public BooksSet()
         {
-            this.library.Add(new Book(00001, "1984", "George Orwell", 1949));
-            this.library.Add(new Book(00002, "Brave New World", "Aldous Huxley", 1932));
-            this.library.Add(new Book(00003, "Pride and Prejudice", " Jane Austen", 1813));
-            this.library.Add(new Book(00004, "Fahrenheit 451", "Ray Bradbury", 1953));
-            this.library.Add(new Book(00005, "The Lovely Bones", "Alice Sebold", 2002));
+            this.library.Add(new Book(1, "1984", "George Orwell", 1949));
+            this.library.Add(new Book(2, "Brave New World", "Aldous Huxley", 1932));
+            this.library.Add(new Book(3, "Pride and Prejudice", " Jane Austen", 1813));
+            this.library.Add(new Book(4, "Fahrenheit 451", "Ray Bradbury", 1953));
+            this.library.Add(new Book(5, "The Lovely Bones", "Alice Sebold", 2002));
+        }
+
+        /// <summary>
+        /// Get current library instance
+        /// </summary>
+        /// <returns>the set of books</returns>
+        public static BooksSet GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new BooksSet();
+            }
+            return instance;
         }
 
         /// <summary>
@@ -47,7 +65,7 @@ namespace WebApi.Library
         /// <returns>one book</returns>
         public Book GetBook(int id)
         {
-            Book book = this.library.ElementAt(id); // Find
+            Book book = this.library[id - 1];
             return book;
         }
 
@@ -55,7 +73,6 @@ namespace WebApi.Library
         /// For creating books
         /// </summary>
         /// <param name="book">book instance</param>
-        [HttpPost]
         public void CreateBook([FromBody]Book book)
         {
             this.library.Add(book);
@@ -66,13 +83,12 @@ namespace WebApi.Library
         /// </summary>
         /// <param name="id">book's id</param>
         /// <param name="book">book's instance</param>
-        [HttpPut]
         public void EditBook(int id, [FromBody]Book book)
         {
-            if (id == book.Id)
+            if (id - 1 == book.Id)
             {
-                this.library.Remove(this.library[id]);
-                this.library.Insert(id, book);
+                this.library.Remove(this.library[id - 1]);
+                this.library.Insert(id - 1, book);
             }
         }
 
@@ -80,14 +96,13 @@ namespace WebApi.Library
         /// Delete one book
         /// </summary>
         /// <param name="id">book's id</param>
-        [HttpDelete]
         public void DeleteBook(int id)
         {
-            Book book = this.library[id];
+            Book book = this.library[id - 1];
             
             if (book != null)
             {
-                this.library.Remove(this.library[id]);
+               this.library.Remove(book);
             }
         }
     }
