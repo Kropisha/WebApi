@@ -8,6 +8,9 @@ namespace WebApi
     using System.Web.Http;
     using WebApi.Configuration;
 
+    /// <summary>
+    /// Base class 
+    /// </summary>
     public class Global : System.Web.HttpApplication
     {
         protected void Application_Start(object sender, EventArgs e)
