@@ -90,14 +90,20 @@ namespace WebApi.Library
         /// <returns>current book</returns>
         public Book GetBook(int id)
         {
-            if (this.books[id - 1].Id == id)
+            Book currentBook = null;
+            foreach (var book in this.books)
             {
-                return this.books[id - 1];
+                if (book.Id == id)
+                {
+                    currentBook = book;
+                }
+                else
+                {
+                    throw new ArgumentException("No book with this id");
+                }
             }
-            else
-            {
-                throw new ArgumentException("No book with this id");
-            }
+
+            return currentBook;
         }
 
         /// <summary>
@@ -107,29 +113,47 @@ namespace WebApi.Library
         /// <returns>current author</returns>
         public Author GetAuthor(int id)
         {
-            if (this.authors[id - 1].Id == id)
+            Author currentAuthor = null;
+            foreach (var author in this.authors)
             {
-                return this.authors[id - 1];
+                if (author.Id == id)
+                {
+                    currentAuthor = author;
+                }
+                else
+                {
+                    throw new ArgumentException("No author with this id");
+                }
             }
-            else
-            {
-                throw new ArgumentException("No author with this id");
-            }
+
+            return currentAuthor;
         }
 
         /// <summary>
         /// Change book's values
         /// </summary>
         /// <param name="id">book's id</param>
-        /// <param name="book">current book</param>
-        public void UpdateBook(int id, Book book)
+        /// <param name="newBook">current book</param>
+        public void UpdateBook(int id, Book newBook)
         {
-            Book currentBook = this.books[id - 1];
+            Book currentBook = null;
+            foreach (var book in this.books)
+            {
+                if (book.Id == id)
+                {
+                    currentBook = book;
+                }
+                else
+                {
+                    throw new ArgumentException("No book with this id");
+                }
+            }
+
             if (currentBook != null)
             {
-                currentBook.Name = book.Name;
-                currentBook.Year = book.Year;
-                currentBook.AuthorId = book.AuthorId;
+                currentBook.Name = newBook.Name;
+                currentBook.Year = newBook.Year;
+                currentBook.AuthorId = newBook.AuthorId;
             }
         }
 
@@ -137,14 +161,26 @@ namespace WebApi.Library
         /// Change author's values
         /// </summary>
         /// <param name="id">author's id</param>
-        /// <param name="author">current author</param>
-        public void UpdateAuthor(int id, Author author)
+        /// <param name="newAuthor">current author</param>
+        public void UpdateAuthor(int id, Author newAuthor)
         {
-            Author currentAuthor = this.authors[id - 1];
+            Author currentAuthor = null;
+            foreach (var author in this.authors)
+            {
+                if (author.Id == id)
+                {
+                    currentAuthor = author;
+                }
+                else
+                {
+                    throw new ArgumentException("No book with this id");
+                }
+            }
+
             if (currentAuthor != null)
             {
-                currentAuthor.Name = author.Name;
-                currentAuthor.BirthYear = author.BirthYear;
+                currentAuthor.Name = newAuthor.Name;
+                currentAuthor.BirthYear = newAuthor.BirthYear;
             }
         }
 
@@ -154,7 +190,19 @@ namespace WebApi.Library
         /// <param name="id">book's id</param>
         public void DeleteBook(int id)
         {
-            Book currentBook = this.books[id - 1];
+            Book currentBook = null;
+            foreach (var book in this.books)
+            {
+                if (book.Id == id)
+                {
+                    currentBook = book;
+                }
+                else
+                {
+                    throw new ArgumentException("No book with this id");
+                }
+            }
+
             if (currentBook != null)
             {
                 this.books.Remove(currentBook);
@@ -167,7 +215,18 @@ namespace WebApi.Library
         /// <param name="id">author's id</param>
         public void DeleteAuthor(int id)
         {
-            Author currentAuthor = this.authors[id - 1];
+            Author currentAuthor = null;
+            foreach (var author in this.authors)
+            {
+                if (author.Id == id)
+                {
+                    currentAuthor = author;
+                }
+                else
+                {
+                    throw new ArgumentException("No book with this id");
+                }
+            }
             if (currentAuthor != null)
             {
                 this.authors.Remove(currentAuthor);
