@@ -6,6 +6,9 @@ namespace WebApi.Models
 {
     using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// An instance of book
+    /// </summary>
     public class Book
     {
         /// <summary>
