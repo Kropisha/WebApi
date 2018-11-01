@@ -227,6 +227,7 @@ namespace WebApi.Library
                     throw new ArgumentException("No book with this id");
                 }
             }
+
             if (currentAuthor != null)
             {
                 this.authors.Remove(currentAuthor);
