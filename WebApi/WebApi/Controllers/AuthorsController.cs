@@ -31,10 +31,8 @@ namespace WebApi.Controllers
             this.library = library;
         }
 
-        // GET api/authors
-
         /// <summary>
-        /// Get all authors
+        /// Get all authors // GET api/authors
         /// </summary>
         /// <returns>collection with authors</returns>
         [HttpGet]
@@ -43,26 +41,31 @@ namespace WebApi.Controllers
             return this.library.GetAuthors();
         }
 
-        // GET api/authors/5
-
         /// <summary>
-        /// Get author by id
+        /// Get author by id // GET api/authors/5
         /// </summary>
         /// <param name="id">author's id</param>
         /// <returns>current author</returns>
         [HttpGet("{id}")]
-        public Author GetAuthor(int id)
+        public ActionResult<Author> GetAuthor(int id)
         {
+            try
+            {
+                this.library.GetAuthor(id);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+
             return this.library.GetAuthor(id);
         }
 
-        // POST api/authors
-
-       /// <summary>
-       /// Add new author
-       /// </summary>
-       /// <param name="author">author's instance</param>
-       /// <returns>the result of an action</returns>
+        /// <summary>
+        /// Add new author // POST api/authors
+        /// </summary>
+        /// <param name="author">author's instance</param>
+        /// <returns>the result of an action</returns>
         [HttpPost]
         public IActionResult AddAuthor([FromBody]Author author)
         {
@@ -73,33 +76,49 @@ namespace WebApi.Controllers
             }
             catch (ArgumentException exception)
             {
-                return this.BadRequest(exception.Message);
+                return this.NotFound(exception.Message);
             }
         }
 
-        // PUT api/authors/5
-
         /// <summary>
-        /// Change author's values
+        /// Change author's values // PUT api/authors/5
         /// </summary>
         /// <param name="id">author's id</param>
         /// <param name="author">current author</param>
+        /// <returns>the result of editing</returns>
         [HttpPut("{id}")]
-        public void Edit(int id, [FromBody]Author author)
+        public IActionResult Edit(int id, [FromBody]Author author)
         {
-            this.library.UpdateAuthor(id, author);
+            try
+            {
+                this.library.UpdateAuthor(id, author);
+            }
+            catch (ArgumentException exception)
+            {
+                return this.NotFound(exception.Message);
+            }
+
+            return this.Ok();
         }
 
-        // DELETE api/authors/5
-
         /// <summary>
-        /// Remove author
+        /// Remove author // DELETE api/authors/5
         /// </summary>
         /// <param name="id">author's id</param>
+        /// <returns>the result of removing</returns>
         [HttpDelete("{id}")]
-        public void Remove(int id)
+        public IActionResult Remove(int id)
         {
-            this.library.DeleteBook(id);
+            try
+            {
+                this.library.DeleteAuthor(id);
+            }
+            catch (ArgumentException exception)
+            {
+                return this.NotFound(exception.Message);
+            }
+
+            return this.Ok();
         }
     }
 }

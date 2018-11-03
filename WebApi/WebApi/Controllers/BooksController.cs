@@ -13,7 +13,7 @@ namespace WebApi.Controllers
     /// <summary>
     /// Books controller
     /// </summary>
-    [Route("api/books")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BooksController : Controller
     {
@@ -31,10 +31,8 @@ namespace WebApi.Controllers
             this.library = library;
         }
 
-        // GET api/books
-
         /// <summary>
-        /// Get all books
+        /// Get all books // GET api/books
         /// </summary>
         /// <returns>collection with books</returns>
         [HttpGet]
@@ -43,23 +41,28 @@ namespace WebApi.Controllers
             return this.library.GetBooks();
         }
 
-        // GET api/books/5
-
         /// <summary>
-        /// Get book by id
+        /// Get book by id // GET api/books/5
         /// </summary>
         /// <param name="id">book's id</param>
         /// <returns>current book</returns>
         [HttpGet("{id}")]
         public ActionResult<Book> Get(int id)
         {
+            try
+            {
+                this.library.GetBook(id);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+
             return this.library.GetBook(id);
         }
 
-        // POST api/books
-
         /// <summary>
-        /// Add new book
+        /// Add new book // POST api/books
         /// </summary>
         /// <param name="book">book's instance</param>
         /// <returns>the result of an action</returns>
@@ -73,33 +76,49 @@ namespace WebApi.Controllers
             }
             catch (ArgumentException exception)
             {
-                return this.BadRequest(exception.Message);
+                return this.NotFound(exception.Message);
             }
         }
 
-        // PUT api/books/5
-
         /// <summary>
-        /// Change book's values
+        /// Change book's values // PUT api/books/5
         /// </summary>
         /// <param name="id">book's id</param>
         /// <param name="book">current book</param>
+        /// <returns>the result of editing</returns>
         [HttpPut("{id}")]
-        public void Edit(int id, [FromBody]Book book)
+        public IActionResult Edit(int id, [FromBody]Book book)
         {
-            this.library.UpdateBook(id, book);
+            try
+            {
+                this.library.UpdateBook(id, book);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+
+            return this.Ok();
         }
 
-        // DELETE api/books/5
-
         /// <summary>
-        /// Remove book
+        /// Remove book // DELETE api/books/5
         /// </summary>
         /// <param name="id">book's id</param>
+        /// <returns>Result of removing</returns>
         [HttpDelete("{id}")]
-        public void Remowe(int id)
+        public IActionResult Remove(int id)
         {
-            this.library.DeleteBook(id);
+            try
+            {
+                this.library.DeleteBook(id);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+
+            return this.Ok();
         }
     }
 }

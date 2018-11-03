@@ -97,10 +97,11 @@ namespace WebApi.Library
                 {
                     currentBook = book;
                 }
-                else
-                {
-                    throw new ArgumentException("No book with this id");
-                }
+            }
+
+            if (currentBook == null)
+            {
+                throw new ArgumentException("No book with this id");
             }
 
             return currentBook;
@@ -120,10 +121,11 @@ namespace WebApi.Library
                 {
                     currentAuthor = author;
                 }
-                else
-                {
-                    throw new ArgumentException("No author with this id");
-                }
+            }
+
+            if (currentAuthor == null)
+            {
+                throw new ArgumentException("No author with this id");
             }
 
             return currentAuthor;
@@ -143,10 +145,11 @@ namespace WebApi.Library
                 {
                     currentBook = book;
                 }
-                else
-                {
-                    throw new ArgumentException("No book with this id");
-                }
+            }
+
+            if (currentBook == null)
+            {
+                throw new ArgumentException("No book with this id");
             }
 
             if (currentBook != null)
@@ -171,10 +174,11 @@ namespace WebApi.Library
                 {
                     currentAuthor = author;
                 }
-                else
-                {
-                    throw new ArgumentException("No book with this id");
-                }
+            }
+
+            if (currentAuthor == null)
+            {
+                throw new ArgumentException("No author with this id");
             }
 
             if (currentAuthor != null)
@@ -197,10 +201,11 @@ namespace WebApi.Library
                 {
                     currentBook = book;
                 }
-                else
-                {
-                    throw new ArgumentException("No book with this id");
-                }
+            }
+
+            if (currentBook == null)
+            {
+                throw new ArgumentException("No book with this id");
             }
 
             if (currentBook != null)
@@ -222,10 +227,11 @@ namespace WebApi.Library
                 {
                     currentAuthor = author;
                 }
-                else
-                {
-                    throw new ArgumentException("No book with this id");
-                }
+            }
+
+            if (currentAuthor == null)
+            {
+                throw new ArgumentException("No author with this id");
             }
 
             if (currentAuthor != null)

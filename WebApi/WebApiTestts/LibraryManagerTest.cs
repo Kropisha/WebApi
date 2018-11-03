@@ -23,6 +23,7 @@ namespace WebApiTests
         {
             //arrange
             Author expected = new Author(id, name, year);
+
             //act
             Author actual = library.GetAuthor(id);
 
@@ -38,6 +39,7 @@ namespace WebApiTests
         {
             //arrange
             Book expected = new Book(id, name, authorId, year);
+
             //act
             Book actual = library.GetBook(id);
 
@@ -109,6 +111,7 @@ namespace WebApiTests
         {
             //arrange
             Book expected = new Book(id, name, authorId, year);
+
             //act
             library.UpdateBook(id, expected);
             Book actual = library.GetBook(id);
@@ -126,6 +129,7 @@ namespace WebApiTests
         {
             //arrange
             Author expected = new Author(id, name, year);
+
             //act
             library.UpdateAuthor(id, expected);
             Author actual = library.GetAuthor(id);
