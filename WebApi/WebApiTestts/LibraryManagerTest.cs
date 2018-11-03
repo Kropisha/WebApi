@@ -34,6 +34,15 @@ namespace WebApiTests
         }
 
         [TestMethod]
+        [DataRow(10)]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetAuthor_IncorrectValues(int id)
+        {
+            //act
+            Author actual = library.GetAuthor(id);
+        }
+
+        [TestMethod]
         [DataRow(2, "Animal farm", 1, 1945)]
         public void GetBook(int id, string name, int authorId, int year)
         {
@@ -48,6 +57,15 @@ namespace WebApiTests
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.AuthorId, actual.AuthorId);
             Assert.AreEqual(expected.Year, actual.Year);
+        }
+
+        [TestMethod]
+        [DataRow(10)]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetBook_IncorrectValues(int id)
+        {
+            //act
+            Book actual = library.GetBook(id);
         }
 
         [TestMethod]
@@ -67,6 +85,16 @@ namespace WebApiTests
             Assert.AreEqual(expected.Year, actual.Year);
         }
 
+
+        [TestMethod]
+        [DataRow(3, "name", 4, 1979)]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddBook_IncorrectValues(int id, string name, int authorId, int year)
+        {
+            //act
+            Book actual = library.AddBook(new Book(id, name, authorId, year));
+        }
+
         [TestMethod]
         [DataRow(8, "name", 1979)]
         public void AddAuthor(int id, string name, int birthYear)
@@ -84,25 +112,30 @@ namespace WebApiTests
         }
 
         [TestMethod]
-        [DataRow(4)]
+        [DataRow(3, "name", 1979)]
         [ExpectedException(typeof(ArgumentException))]
-        public void DeleteAuthor(int id)
+        public void AddAuthor_IncorrectValues(int id, string name, int year)
         {
             //act
-            library.DeleteAuthor(id);
-            Author actual = library.GetAuthor(id);
-
+            Author actual = library.AddAuthor(new Author(id, name, year));
         }
 
         [TestMethod]
-        [DataRow(4)]
+        [DataRow(10)]
         [ExpectedException(typeof(ArgumentException))]
-        public void DeleteBook(int id)
+        public void DeleteAuthor_IncorrectValue(int id)
+        {
+            //act
+            library.DeleteAuthor(id);
+        }
+
+        [TestMethod]
+        [DataRow(10)]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DeleteBook_IncorrectValue(int id)
         {
             //act
             library.DeleteBook(id);
-            Book actual = library.GetBook(id);
-
         }
 
         [TestMethod]
@@ -124,6 +157,15 @@ namespace WebApiTests
         }
 
         [TestMethod]
+        [DataRow(13, "name", 4, 1979)]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UpdateBook_IncorrectValues(int id, string name, int authorId, int year)
+        {
+            //act
+            library.UpdateBook(id, new Book(id, name, authorId, year));
+        }
+
+        [TestMethod]
         [DataRow(4, "name", 1456)]
         public void UpdateAuthor(int id, string name, int year)
         {
@@ -138,6 +180,15 @@ namespace WebApiTests
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.BirthYear, actual.BirthYear);
+        }
+
+        [TestMethod]
+        [DataRow(13, "name", 1979)]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UpdateAuthor_IncorrectValues(int id, string name, int year)
+        {
+            //act
+            library.UpdateAuthor(id, new Author(id, name, year));
         }
     }
 }

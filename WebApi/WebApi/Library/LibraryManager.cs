@@ -46,23 +46,41 @@ namespace WebApi.Library
         /// <summary>
         /// Add new author
         /// </summary>
-        /// <param name="author">author's instance</param>
+        /// <param name="newAuthor">author's instance</param>
         /// <returns>the result of an action</returns>
-        public Author AddAuthor(Author author)
+        public Author AddAuthor(Author newAuthor)
         {
-            this.authors.Add(author);
-            return author;
+            foreach (var author in this.authors)
+            {
+                if (author.Id == newAuthor.Id)
+                {
+                   throw new ArgumentException("No author with this id");
+                }
+            }
+
+            this.authors.Add(newAuthor);
+
+            return newAuthor;
         }
 
         /// <summary>
         /// Add new book
         /// </summary>
-        /// <param name="book">book's instance</param>
+        /// <param name="newBook">book's instance</param>
         /// <returns>the result of an action</returns>
-        public Book AddBook(Book book)
+        public Book AddBook(Book newBook)
         {
-            this.books.Add(book);
-            return book;
+            foreach (var book in this.books)
+            {
+                if (book.Id == newBook.Id)
+                {
+                   throw new ArgumentException("No book with this id");
+                }
+            }
+
+            this.books.Add(newBook);
+
+            return newBook;
         }
 
         /// <summary>
